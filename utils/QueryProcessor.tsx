@@ -27,5 +27,18 @@ export default function QueryProcessor(query: string): string {
     return Number.isInteger(largest) ? largest.toString() : largest.toString();
   }
 
+  if (query.toLowerCase().includes("plus")) {
+    // Extract numbers (integers or decimals, including negative) from the query
+    const nums = Array.from(query.matchAll(/-?\d+(?:\.\d+)?/g)).map(m => parseFloat(m[0]));
+
+    if (nums.length === 0) {
+      return "I couldn't find any numbers to add.";
+    }
+
+    const sum = nums.reduce((a, b) => a + b, 0);
+
+    return Number.isInteger(sum) ? sum.toString() : sum.toString();
+  }
+
   return "";
 }
